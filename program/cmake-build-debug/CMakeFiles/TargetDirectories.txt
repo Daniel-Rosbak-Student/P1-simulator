@@ -1,3 +1,0 @@
-C:/Users/Daniel/Documents/GitHub/P1-simulator/program/cmake-build-debug/CMakeFiles/program.dir
-C:/Users/Daniel/Documents/GitHub/P1-simulator/program/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Daniel/Documents/GitHub/P1-simulator/program/cmake-build-debug/CMakeFiles/rebuild_cache.dir
