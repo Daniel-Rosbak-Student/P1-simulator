@@ -24,13 +24,49 @@ RegionStruct* readFile() {
     RegionStruct* newRegion;
     int numOfRegions;
 
-    FILE* regionsFile = fopen("settongs.txt", "r");
-    fscanf(regionsFile, " %d", &numOfRegions);
-    for (int i = 0; i < numOfRegions; ++i) {
-        fscanf(regionsFile, "%*c %s%*c %d%*c %d%*c", newRegion[i].regionName,
-               newRegion[i].foodType, &newRegion[i].numOfProducers);
-        for (int j = 0; j < newRegion[i].numOfProducers; ++j) {
+    FILE* regionsFile = fopen("settings.txt", "r");
+    fscanf(regionsFile, " %d%*c", &numOfRegions);
 
+    newRegion = malloc(sizeof (RegionStruct) * numOfRegions);
+
+    for (int i = 0; i < numOfRegions; ++i) {
+        fscanf(regionsFile, " %[0-9A-Za-z]%*c %u%*c %d%*c", newRegion[i].regionName,
+               &newRegion[i].foodType, &newRegion[i].numOfProducers);
+
+        //we allocate memory for excess produce, excess volatility, cost per unit and transport cost
+        newRegion[i].baseExcessPerOrg = malloc(sizeof (int) * newRegion[i].numOfProducers);
+        newRegion[i].excessVolatility = malloc(sizeof (double) * newRegion[i].numOfProducers);
+        newRegion[i].costPerUnit = malloc(sizeof (double) * newRegion[i].numOfProducers);
+        newRegion[i].transportCost = malloc(sizeof (double) * newRegion[i].numOfProducers);
+
+        //we scan the base excess for each producer
+        for (int j = 0; j < newRegion[i].numOfProducers; ++j) {
+            fscanf(regionsFile, " %d%*c", &newRegion[i].baseExcessPerOrg[j]);
+        }
+
+        fscanf(regionsFile, " %d%*c", &newRegion[i].numOfOrganizations);
+
+        //we allocate memory for demand
+        newRegion[i].demandPerOrg = malloc(sizeof (int) * newRegion[i].numOfOrganizations);
+
+        //we scan the demand for each organization
+        for (int j = 0; j < newRegion[i].numOfOrganizations; ++j) {
+            fscanf(regionsFile, " %d%*c", &newRegion[i].demandPerOrg[j]);
+        }
+
+        //we scan excess volatility for each producer
+        for (int j = 0; j < newRegion[i].numOfProducers; ++j) {
+            fscanf(regionsFile, " %lf%*c", &newRegion[i].excessVolatility[j]);
+        }
+
+        //we scan cost per unit for each producer
+        for (int j = 0; j < newRegion[i].numOfProducers; ++j) {
+            fscanf(regionsFile, " %lf%*c", &newRegion[i].costPerUnit[j]);
+        }
+
+        //we scan transport cost for each producer
+        for (int j = 0; j < newRegion[i].numOfProducers; ++j) {
+            fscanf(regionsFile, " %lf%*c", &newRegion[i].transportCost[j]);
         }
     }
     return newRegion;
@@ -55,9 +91,9 @@ RegionStruct* readFromTerminal() {
 
         newRegion[i].numOfProducers = producers;
         newRegion[i].baseExcessPerOrg = malloc(sizeof(int) * producers);
-        newRegion[i].transportCost = malloc(sizeof(double) * producers);
-        newRegion[i].costPerUnit = malloc(sizeof(double) * producers);
         newRegion[i].excessVolatility = malloc(sizeof(double) * producers);
+        newRegion[i].costPerUnit = malloc(sizeof(double) * producers);
+        newRegion[i].transportCost = malloc(sizeof(double) * producers);
 
         printf("Please enter excess food per organization (seperated by space): ");
 
@@ -97,7 +133,15 @@ RegionStruct* readFromTerminal() {
                 newRegion[i].foodType = MEAT;
         }
 
+        printf("Please enter volatility of excess as a multiplier per producer (0: the excess is constant  "
+               "1: the excess fluctuates between double of base and zero): ");
+
+        for (int j = 0; j < producers; ++j){
+            scanf(" %lf", &newRegion[i].excessVolatility[j]);
+        }
+
         printf("Please enter cost per unit of the excess food per producer (seperated by space): ");
+
         for (int j = 0; j < producers; ++j){
             scanf(" %lf", &newRegion[i].costPerUnit[j]);
         }
@@ -106,13 +150,6 @@ RegionStruct* readFromTerminal() {
 
         for (int j = 0; j < producers; ++j){
             scanf(" %lf", &newRegion[i].transportCost[j]);
-        }
-
-        printf("Please enter volatility of excess as a multiplier per producer (0: the excess is constant  "
-               "1: the excess fluctuates between double of base and zero): ");
-
-        for (int j = 0; j < producers; ++j){
-            scanf(" %lf", &newRegion[i].excessVolatility[j]);
         }
 
         printf("How many organizations in the region?: ");
@@ -181,5 +218,3 @@ int main() {
 
     return 0;
 }
-
-
