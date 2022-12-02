@@ -19,17 +19,16 @@ typedef struct {
 } RegionStruct;
 
 
-RegionStruct* readFile() {
+RegionStruct* readFile(int* numOfRegions) {
 
     RegionStruct* newRegion;
-    int numOfRegions;
 
     FILE* regionsFile = fopen("settings.txt", "r");
-    fscanf(regionsFile, " %d%*c", &numOfRegions);
+    fscanf(regionsFile, " %d%*c", numOfRegions);
 
-    newRegion = malloc(sizeof (RegionStruct) * numOfRegions);
+    newRegion = malloc(sizeof (RegionStruct) * *numOfRegions);
 
-    for (int i = 0; i < numOfRegions; ++i) {
+    for (int i = 0; i < *numOfRegions; ++i) {
         fscanf(regionsFile, " %[0-9A-Za-z]%*c %u%*c %d%*c", newRegion[i].regionName,
                &newRegion[i].foodType, &newRegion[i].numOfProducers);
 
@@ -69,19 +68,20 @@ RegionStruct* readFile() {
             fscanf(regionsFile, " %lf%*c", &newRegion[i].transportCost[j]);
         }
     }
+
     return newRegion;
 }
 
 
-RegionStruct* readFromTerminal() {
+RegionStruct* readFromTerminal(int* numOfRegions) {
     int regions, producers, organizations, foodtype;
 
     printf("Please enter the number of regions: ");
-    scanf(" %d", &regions);
+    scanf(" %d", numOfRegions);
 
-    RegionStruct* newRegion = malloc(sizeof(RegionStruct) * regions);
+    RegionStruct* newRegion = malloc(sizeof(RegionStruct) * *numOfRegions);
 
-    for (int i = 0; i < regions; ++i) {
+    for (int i = 0; i < *numOfRegions; ++i) {
         printf("Please enter information for region %d: \n", i + 1);
         printf("Region name (less than 100 characters): ");
         scanf(" %s", newRegion[i].regionName);
@@ -168,7 +168,40 @@ RegionStruct* readFromTerminal() {
 }
 
 
-void saveFile() {
+void saveFile(RegionStruct* region, int numOfRegions) {
+
+    FILE* regionsFile = fopen("Result.txt", "w");
+
+    fprintf(regionsFile, "%d, ", numOfRegions);
+
+    for (int i = 0; i < numOfRegions; ++i) {
+        fprintf(regionsFile, "%s, %d, %d, ", region[i].regionName, region[i].foodType, region[i].numOfProducers);
+
+        for (int j = 0; j < region[i].numOfProducers; ++j) {
+            fprintf(regionsFile, "%d, ", region[i].baseExcessPerOrg[j]);
+        }
+
+        fprintf(regionsFile, "%d, ", region[i].numOfOrganizations);
+
+        for (int j = 0; j < region[i].numOfOrganizations; ++j) {
+            fprintf(regionsFile, "%d, ", region[i].demandPerOrg[j]);
+        }
+
+
+        for (int j = 0; j < region[i].numOfProducers; ++j) {
+            fprintf(regionsFile, "%.2lf, ", region[i].excessVolatility[j]);
+        }
+
+        //we scan cost per unit for each producer
+        for (int j = 0; j < region[i].numOfProducers; ++j) {
+            fprintf(regionsFile, "%.2lf, ", region[i].costPerUnit[j]);
+        }
+
+        //we scan transport cost for each producer
+        for (int j = 0; j < region[i].numOfProducers; ++j) {
+            fprintf(regionsFile, "%.2lf, ", region[i].transportCost[j]);
+        }
+    }
 
 }
 
@@ -186,6 +219,7 @@ void outputResult() {
 int main() {
 
     char input;
+    int numberOfRegions;
     RegionStruct* regions;
 
     //ask if user wants to read file or terminal
@@ -194,10 +228,10 @@ int main() {
         scanf("%c", &input);
 
         if(input == 'y'){
-            regions = readFile();
+            regions = readFile(&numberOfRegions);
             break;
         } else if(input == 'n') {
-            regions = readFromTerminal();
+            regions = readFromTerminal(&numberOfRegions);
             break;
         } else {
             printf("Please input 'y' or 'n'");
@@ -208,13 +242,13 @@ int main() {
            regions[0].baseExcessPerOrg[0], regions[0].numOfOrganizations, regions[0].demandPerOrg[0],
            regions[0].excessVolatility[0], regions[0].costPerUnit[0], regions[0].transportCost[0]);
 
-    free(regions);
-
     calculateIteration();
 
     outputResult();
 
-    saveFile();
+    saveFile(regions, numberOfRegions);
+
+    free(regions);
 
     return 0;
 }
