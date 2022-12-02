@@ -20,15 +20,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9638cd7f-d539-4ff7-b387-4d580fdd49e5" name="Changes" comment="Lili">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/program.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/program.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-    </list>
+    <list default="true" id="9638cd7f-d539-4ff7-b387-4d580fdd49e5" name="Changes" comment="mogens" />
     <list id="a15ff0ea-8442-4417-91d3-24a4cc6919bd" name="Changes by Daniel" comment="" />
     <list id="1ae8a366-877d-49d0-8d0d-e821c8c2aaf9" name="Changes by kristianwinther" comment="" />
     <list id="b5b24816-526f-4dcd-ab25-9d8637ac877c" name="Changes by tobiasandersen" comment="" />
@@ -100,7 +92,7 @@
       <workItem from="1669796672051" duration="11903000" />
       <workItem from="1669886923725" duration="1345000" />
       <workItem from="1669972073842" duration="488000" />
-      <workItem from="1669972757471" duration="2592000" />
+      <workItem from="1669972757471" duration="2703000" />
     </task>
     <task id="LOCAL-00001" summary="Lili">
       <created>1669628036402</created>
@@ -109,7 +101,28 @@
       <option name="project" value="LOCAL" />
       <updated>1669628036402</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Lili">
+      <created>1669980611928</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1669980611928</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Lili">
+      <created>1669980617676</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1669980617676</updated>
+    </task>
+    <task id="LOCAL-00004" summary="mogens">
+      <created>1669980632363</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1669980632363</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -128,6 +141,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Lili" />
-    <option name="LAST_COMMIT_MESSAGE" value="Lili" />
+    <MESSAGE value="mogens" />
+    <option name="LAST_COMMIT_MESSAGE" value="mogens" />
   </component>
 </project>
