@@ -222,7 +222,7 @@ int main() {
     int numberOfRegions;
     RegionStruct* regions;
 
-    //ask if user wants to read file or terminal
+    //ask if user wants to read file or termina l
     printf("Would you like to load a file? (y/n)");
     while (1) {
         scanf("%c", &input);
