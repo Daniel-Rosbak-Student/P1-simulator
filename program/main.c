@@ -2,7 +2,8 @@
 #include <stdlib.h>
 
 
-//https://mad-og-drikke.dk/mad-drinks-artikel/hvor-laenge-holder-mad-i-fryseren-og-koeleskabet/
+// food type defined as enum, where the int values refer to how many days the products last in the fridge
+// this makes it easy for the user to enter food type
 typedef enum {SEAFOOD = 3, BAKEDGOODS = 4, MEAT = 5, GREENS = 6, EGGS = 7, DAIRY = 8} foodType;
 
 
@@ -272,7 +273,6 @@ void outputResult(RegionResultStruct* results, int numberOfRegions) {
         printf("%.2lf\n", results[i].costOfTransport);
     }
 
-
     /*
      * Result format:
      * Region    food type    food saved    food wasted    cost of food    cost of transport
@@ -281,7 +281,6 @@ void outputResult(RegionResultStruct* results, int numberOfRegions) {
      * Mogens    bakedgoods  23             46            242.75           971.23
      * Robert    meat        427            0             623.84           726.45
      */
-
 
 }
 
@@ -293,7 +292,7 @@ int main() {
     RegionStruct* regions;
     RegionResultStruct* results;
 
-    //ask if user wants to read file or termina l
+    //ask if user wants to read file or terminal
     printf("Would you like to load a file? (y/n)");
     while (1) {
         scanf("%c", &input);
