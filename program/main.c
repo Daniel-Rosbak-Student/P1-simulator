@@ -82,13 +82,21 @@ RegionStruct* readFile(int* numOfRegions) {
     return newRegion;
 }
 
+<<<<<<< HEAD
 
+=======
+// if the user chooses to input data themselves
+>>>>>>> parent of 98a35cb (Ben 06/12)
 RegionStruct* readFromTerminal(int* numOfRegions) {
     int regions, producers, organizations, foodtype;
 
     printf("Please enter the number of regions: ");
     scanf(" %d", numOfRegions);
 
+<<<<<<< HEAD
+=======
+    // allocating memory for the region struct
+>>>>>>> parent of 98a35cb (Ben 06/12)
     RegionStruct* newRegion = malloc(sizeof(RegionStruct) * *numOfRegions);
 
     for (int i = 0; i < *numOfRegions; ++i) {
@@ -245,7 +253,23 @@ char* convertFoodtypeEnum(foodType input){
 }
 
 
+<<<<<<< HEAD
 void calculateIteration(RegionStruct* regions, RegionResultStruct* results) {
+=======
+void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int numOfRegions, int numOfIterations) {
+    //Here we simulate the given amount of days
+    for (int i = 0; i < numOfIterations; ++i) {
+        for (int j = 0; j < numOfRegions; ++j) {
+            for (int k = 0; k < regions[j].numOfOrganizations; ++k) {
+                //calculate numbers
+                while (regions[j].demandPerOrg[k] > 0) {
+                    int cheapestProducersIndex = 0;
+                    for (int l = 0; l < regions[j].numOfProducers; ++l) {
+                        if (regions[j].baseExcessPerOrg > 0) {
+                            if (regions[j].baseExcessPerOrg[l] >= regions[j].demandPerOrg[k]) {
+                                (regions[j]. regions[j].transportCost[l] * regions[j].distanceToOrg[k]);
+                            } else {
+>>>>>>> parent of 98a35cb (Ben 06/12)
 
     for (int i = 0; i < 1; ++i) {
         results[i].costOfTransport = regions[i].transportCost[i];
