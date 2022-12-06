@@ -254,16 +254,47 @@ char* convertFoodtypeEnum(foodType input){
 }
 
 
-void calculateIteration(RegionStruct* regions, RegionResultStruct* results) {
+void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int numOfRegions, int numOfIterations) {
+    //Here we simulate the given amount of days
+    for (int i = 0; i < numOfIterations; ++i) {
+        for (int j = 0; j < numOfRegions; ++j) {
+            for (int k = 0; k < regions[j].numOfOrganizations; ++k) {
+                //calculate numbers
+                while (regions[j].demandPerOrg[k] > 0) {
+                    int cheapestProducersIndex = 0;
+                    for (int l = 0; l < regions[j].numOfProducers; ++l) {
+                        if (regions[j].baseExcessPerOrg > 0) {
+                            if (regions[j].baseExcessPerOrg[l] >= regions[j].demandPerOrg[k]) {
+                                (regions[j]. regions[j].transportCost[l] * regions[j].distanceToOrg[k]);
+                            } else {
 
-    for (int i = 0; i < 1; ++i) {
-        results[i].costOfTransport = regions[i].transportCost[i]; //can be expanded upon
-        results[i].costOfUnits = regions[i].costPerUnit[i];
-        results[i].foodWasted = regions[i].baseExcessPerOrg[i];
-        results[i].foodSaved = regions[i].baseExcessPerOrg[i] * 1.2; //here we would input the amount of food redistributed to the people
-        results[i].foodType = convertFoodtypeEnum(regions[i].foodType);
-        results[i].regionName = "mogens";
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
+    /*Cost of Transport
+             * Cost is at the moment fixed to each location's "Transport cost"
+             *
+             */
+
+
+    //find_best_route();
+
+
+
+
+
+
+    //Cost of Units
+
+
+
+
+
+
 
 }
 
