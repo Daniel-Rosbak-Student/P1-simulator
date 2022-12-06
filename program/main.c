@@ -14,6 +14,7 @@ typedef struct {
     int* baseExcessPerOrg;
     int numOfOrganizations;
     int* demandPerOrg;
+    double* distanceToOrg;
     double* excessVolatility;
     double* costPerUnit;
     double* transportCost;
@@ -29,6 +30,7 @@ typedef struct {
     double costOfTransport;
 } RegionResultStruct;
 
+//if the user chooses to load settings from a file, this function is called
 RegionStruct* readFile(int* numOfRegions) {
 
 // reads the file given by the user for data for the region(s)
@@ -69,6 +71,13 @@ RegionStruct* readFile(int* numOfRegions) {
             fscanf(regionsFile, " %d%*c", &newRegion[i].demandPerOrg[j]);
         }
 
+        newRegion[i].distanceToOrg = malloc(sizeof (int) * newRegion[i].numOfOrganizations);
+
+        //we scan the distance to each organization
+        for (int j = 0; j < newRegion[i].numOfOrganizations; ++j) {
+            fscanf(regionsFile, " %lf%*c", &newRegion[i].distanceToOrg[j]);
+        }
+
         //we scan excess volatility for each producer
         for (int j = 0; j < newRegion[i].numOfProducers; ++j) {
             fscanf(regionsFile, " %lf%*c", &newRegion[i].excessVolatility[j]);
@@ -79,7 +88,7 @@ RegionStruct* readFile(int* numOfRegions) {
             fscanf(regionsFile, " %lf%*c", &newRegion[i].costPerUnit[j]);
         }
 
-        //we scan transport cost for each producer
+        //we scan transport cost per km for each producer
         for (int j = 0; j < newRegion[i].numOfProducers; ++j) {
             fscanf(regionsFile, " %lf%*c", &newRegion[i].transportCost[j]);
         }
@@ -88,14 +97,14 @@ RegionStruct* readFile(int* numOfRegions) {
     return newRegion;
 }
 
-// if the user chooses to input data themselves
+// if the user chooses to input data themselves this function is called
 RegionStruct* readFromTerminal(int* numOfRegions) {
     int regions, producers, organizations, foodtype;
 
     printf("Please enter the number of regions: ");
     scanf(" %d", numOfRegions);
 
-    // allocating memory for the region struct
+    // allocating memory for the region struct(s) based on the number of regions
     RegionStruct* newRegion = malloc(sizeof(RegionStruct) * *numOfRegions);
 
     for (int i = 0; i < *numOfRegions; ++i) {
@@ -129,6 +138,7 @@ RegionStruct* readFromTerminal(int* numOfRegions) {
         printf("Type 6 for eggs\n");
         scanf(" %d", &foodtype);
 
+        // switch to "translate" the user input to our enum values for food type
         switch(foodtype){
             case 1:
                 newRegion[i].foodType = MEAT;
@@ -165,7 +175,7 @@ RegionStruct* readFromTerminal(int* numOfRegions) {
             scanf(" %lf", &newRegion[i].costPerUnit[j]);
         }
 
-        printf("Please enter transportation costs of the excess food per producer (seperated by space): ");
+        printf("Please enter transportation cost per km of the excess food per producer (seperated by space): ");
 
         for (int j = 0; j < producers; ++j){
             scanf(" %lf", &newRegion[i].transportCost[j]);
@@ -174,13 +184,21 @@ RegionStruct* readFromTerminal(int* numOfRegions) {
         printf("How many organizations in the region?: ");
         scanf(" %d", &organizations);
 
+        // using the user input for number of organizations, allocating memory accordingly for demand and distance
         newRegion[i].numOfOrganizations = organizations;
         newRegion[i].demandPerOrg = malloc(sizeof(int) * organizations);
+        newRegion[i].distanceToOrg = malloc(sizeof(int) * organizations);
 
         printf("Please enter demand per organization (seperated by space): ");
 
-        for (int j = 0; j < producers; ++j){
+        for (int j = 0; j < organizations; ++j){
             scanf(" %d", &newRegion[i].demandPerOrg[j]);
+        }
+
+        printf("Please enter distance to each organization (seperated by space): ");
+
+        for (int j = 0; j < organizations; ++j){
+            scanf(" %lf", &newRegion[i].distanceToOrg[j]);
         }
     }
     return newRegion;
@@ -265,7 +283,7 @@ void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int 
                     for (int l = 0; l < regions[j].numOfProducers; ++l) {
                         if (regions[j].baseExcessPerOrg > 0) {
                             if (regions[j].baseExcessPerOrg[l] >= regions[j].demandPerOrg[k]) {
-                                (regions[j]. regions[j].transportCost[l] * regions[j].distanceToOrg[k]);
+                                (regions[j].transportCost[l] * regions[j].distanceToOrg[k]);
                             } else {
 
                             }
@@ -301,10 +319,10 @@ void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int 
 
 void outputResult(RegionResultStruct* results, int numberOfRegions) {
 
+    printf("Region\tFood type\tFood saved\tFood wasted\tCost of food\tCost of Transport\n");
     int i;
     for(i = 0; i < numberOfRegions; i++)
     {
-        printf("Region\tFood type\tFood saved\tFood wasted\tCost of food\tCost of Transport\n");
         printf("%s\t", results[i].regionName);
         printf("%s\t\t", results[i].foodType);
         printf("%d\t\t", results[i].foodSaved);
@@ -328,7 +346,7 @@ void outputResult(RegionResultStruct* results, int numberOfRegions) {
 int main() {
 
     char input;
-    int numberOfRegions;
+    int numberOfRegions, numOfIterations;
     RegionStruct* regions;
     RegionResultStruct* results;
 
@@ -350,11 +368,14 @@ int main() {
         }
     }
 
+    printf("please input number of days to simulate: ");
+    scanf(" %d", &numOfIterations);
+
     printf("%s, %d, %d, %d, %d, %d, %.2lf, %.2lf, %.2lf\n", regions[0].regionName, regions[0].foodType, regions[0].numOfProducers,
            regions[0].baseExcessPerOrg[0], regions[0].numOfOrganizations, regions[0].demandPerOrg[0],
            regions[0].excessVolatility[0], regions[0].costPerUnit[0], regions[0].transportCost[0]);
 
-    calculateIteration(regions, results);
+    calculateIteration(regions, results, numberOfRegions, numOfIterations);
 
     outputResult(results, numberOfRegions);
 
