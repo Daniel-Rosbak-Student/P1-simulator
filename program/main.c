@@ -2,7 +2,8 @@
 #include <stdlib.h>
 
 
-//https://mad-og-drikke.dk/mad-drinks-artikel/hvor-laenge-holder-mad-i-fryseren-og-koeleskabet/
+// food type is given as enum, where the int values are the number of days the food products last in the fridge
+// this helps us with our calculations, as well as makes it easy for the user to input food type
 typedef enum {SEAFOOD = 3, BAKEDGOODS = 4, MEAT = 5, GREENS = 6, EGGS = 7, DAIRY = 8} foodType;
 
 
@@ -13,23 +14,39 @@ typedef struct {
     int* baseExcessPerOrg;
     int numOfOrganizations;
     int* demandPerOrg;
+    double* distanceToOrg;
     double* excessVolatility;
     double* costPerUnit;
     double* transportCost;
 } RegionStruct;
 
 
-RegionStruct* readFile() {
+typedef struct {
+    char* regionName;
+    char* foodType;
+    int foodSaved;
+    int foodWasted;
+    double costOfUnits;
+    double costOfTransport;
+} RegionResultStruct;
+
+//if the user chooses to load settings from a file, this function is called
+RegionStruct* readFile(int* numOfRegions) {
+
+// reads the file given by the user for data for the region(s)
 
     RegionStruct* newRegion;
-    int numOfRegions;
 
+// open the file and load how many regions there are
     FILE* regionsFile = fopen("settings.txt", "r");
-    fscanf(regionsFile, " %d%*c", &numOfRegions);
+    fscanf(regionsFile, " %d%*c", numOfRegions);
 
-    newRegion = malloc(sizeof (RegionStruct) * numOfRegions);
+// allocating memory with malloc for our region structs (array if more than 1 region)
+    newRegion = malloc(sizeof (RegionStruct) * *numOfRegions);
 
-    for (int i = 0; i < numOfRegions; ++i) {
+    // for-loop for loading all data for regions
+
+    for (int i = 0; i < *numOfRegions; ++i) {
         fscanf(regionsFile, " %[0-9A-Za-z]%*c %u%*c %d%*c", newRegion[i].regionName,
                &newRegion[i].foodType, &newRegion[i].numOfProducers);
 
@@ -54,6 +71,13 @@ RegionStruct* readFile() {
             fscanf(regionsFile, " %d%*c", &newRegion[i].demandPerOrg[j]);
         }
 
+        newRegion[i].distanceToOrg = malloc(sizeof (int) * newRegion[i].numOfOrganizations);
+
+        //we scan the distance to each organization
+        for (int j = 0; j < newRegion[i].numOfOrganizations; ++j) {
+            fscanf(regionsFile, " %lf%*c", &newRegion[i].distanceToOrg[j]);
+        }
+
         //we scan excess volatility for each producer
         for (int j = 0; j < newRegion[i].numOfProducers; ++j) {
             fscanf(regionsFile, " %lf%*c", &newRegion[i].excessVolatility[j]);
@@ -64,24 +88,26 @@ RegionStruct* readFile() {
             fscanf(regionsFile, " %lf%*c", &newRegion[i].costPerUnit[j]);
         }
 
-        //we scan transport cost for each producer
+        //we scan transport cost per km for each producer
         for (int j = 0; j < newRegion[i].numOfProducers; ++j) {
             fscanf(regionsFile, " %lf%*c", &newRegion[i].transportCost[j]);
         }
     }
+
     return newRegion;
 }
 
-
-RegionStruct* readFromTerminal() {
+// if the user chooses to input data themselves this function is called
+RegionStruct* readFromTerminal(int* numOfRegions) {
     int regions, producers, organizations, foodtype;
 
     printf("Please enter the number of regions: ");
-    scanf(" %d", &regions);
+    scanf(" %d", numOfRegions);
 
-    RegionStruct* newRegion = malloc(sizeof(RegionStruct) * regions);
+    // allocating memory for the region struct(s) based on the number of regions
+    RegionStruct* newRegion = malloc(sizeof(RegionStruct) * *numOfRegions);
 
-    for (int i = 0; i < regions; ++i) {
+    for (int i = 0; i < *numOfRegions; ++i) {
         printf("Please enter information for region %d: \n", i + 1);
         printf("Region name (less than 100 characters): ");
         scanf(" %s", newRegion[i].regionName);
@@ -90,6 +116,8 @@ RegionStruct* readFromTerminal() {
         scanf(" %d", &producers);
 
         newRegion[i].numOfProducers = producers;
+
+        // allocating memory for excess, volatility, cost per unit and transport cost based on the number of producers
         newRegion[i].baseExcessPerOrg = malloc(sizeof(int) * producers);
         newRegion[i].excessVolatility = malloc(sizeof(double) * producers);
         newRegion[i].costPerUnit = malloc(sizeof(double) * producers);
@@ -110,6 +138,7 @@ RegionStruct* readFromTerminal() {
         printf("Type 6 for eggs\n");
         scanf(" %d", &foodtype);
 
+        // switch to "translate" the user input to our enum values for food type
         switch(foodtype){
             case 1:
                 newRegion[i].foodType = MEAT;
@@ -146,7 +175,7 @@ RegionStruct* readFromTerminal() {
             scanf(" %lf", &newRegion[i].costPerUnit[j]);
         }
 
-        printf("Please enter transportation costs of the excess food per producer (seperated by space): ");
+        printf("Please enter transportation cost per km of the excess food per producer (seperated by space): ");
 
         for (int j = 0; j < producers; ++j){
             scanf(" %lf", &newRegion[i].transportCost[j]);
@@ -155,30 +184,161 @@ RegionStruct* readFromTerminal() {
         printf("How many organizations in the region?: ");
         scanf(" %d", &organizations);
 
+        // using the user input for number of organizations, allocating memory accordingly for demand and distance
         newRegion[i].numOfOrganizations = organizations;
         newRegion[i].demandPerOrg = malloc(sizeof(int) * organizations);
+        newRegion[i].distanceToOrg = malloc(sizeof(int) * organizations);
 
         printf("Please enter demand per organization (seperated by space): ");
 
-        for (int j = 0; j < producers; ++j){
+        for (int j = 0; j < organizations; ++j){
             scanf(" %d", &newRegion[i].demandPerOrg[j]);
+        }
+
+        printf("Please enter distance to each organization (seperated by space): ");
+
+        for (int j = 0; j < organizations; ++j){
+            scanf(" %lf", &newRegion[i].distanceToOrg[j]);
         }
     }
     return newRegion;
 }
 
 
-void saveFile() {
+void saveFile(RegionStruct* region, int numOfRegions) {
+
+    FILE* regionsFile = fopen("Result.txt", "w");
+
+    fprintf(regionsFile, "%d, ", numOfRegions);
+
+    for (int i = 0; i < numOfRegions; ++i) {
+        fprintf(regionsFile, "%s, %d, %d, ", region[i].regionName, region[i].foodType, region[i].numOfProducers);
+
+        for (int j = 0; j < region[i].numOfProducers; ++j) {
+            fprintf(regionsFile, "%d, ", region[i].baseExcessPerOrg[j]);
+        }
+
+        fprintf(regionsFile, "%d, ", region[i].numOfOrganizations);
+
+        for (int j = 0; j < region[i].numOfOrganizations; ++j) {
+            fprintf(regionsFile, "%d, ", region[i].demandPerOrg[j]);
+        }
+
+
+        for (int j = 0; j < region[i].numOfProducers; ++j) {
+            fprintf(regionsFile, "%.2lf, ", region[i].excessVolatility[j]);
+        }
+
+        //we scan cost per unit for each producer
+        for (int j = 0; j < region[i].numOfProducers; ++j) {
+            fprintf(regionsFile, "%.2lf, ", region[i].costPerUnit[j]);
+        }
+
+        //we scan transport cost for each producer
+        for (int j = 0; j < region[i].numOfProducers; ++j) {
+            fprintf(regionsFile, "%.2lf, ", region[i].transportCost[j]);
+        }
+    }
 
 }
 
 
-void calculateIteration() {
+char* convertFoodtypeEnum(foodType input){
+    char* output;
+
+    switch (input) {
+        case SEAFOOD:
+            output = "Seafood";
+            break;
+        case BAKEDGOODS:
+            output = "Bakedgoods";
+            break;
+        case MEAT:
+            output = "Meat";
+            break;
+        case GREENS:
+            output = "Greens";
+            break;
+        case EGGS:
+            output = "Eggs";
+            break;
+        case DAIRY:
+            output = "Dairy";
+            break;
+        default:
+            output = "ERROR";
+    }
+    return output;
+}
+
+
+void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int numOfRegions, int numOfIterations) {
+    //Here we simulate the given amount of days
+    for (int i = 0; i < numOfIterations; ++i) {
+        for (int j = 0; j < numOfRegions; ++j) {
+            for (int k = 0; k < regions[j].numOfOrganizations; ++k) {
+                //calculate numbers
+                while (regions[j].demandPerOrg[k] > 0) {
+                    int cheapestProducersIndex = 0;
+                    for (int l = 0; l < regions[j].numOfProducers; ++l) {
+                        if (regions[j].baseExcessPerOrg > 0) {
+                            if (regions[j].baseExcessPerOrg[l] >= regions[j].demandPerOrg[k]) {
+                                (regions[j].transportCost[l] * regions[j].distanceToOrg[k]);
+                            } else {
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    /*Cost of Transport
+             * Cost is at the moment fixed to each location's "Transport cost"
+             *
+             */
+
+
+    //find_best_route();
+
+
+
+
+
+
+    //Cost of Units
+
+
+
+
+
+
 
 }
 
 
-void outputResult() {
+void outputResult(RegionResultStruct* results, int numberOfRegions) {
+
+    printf("Region\tFood type\tFood saved\tFood wasted\tCost of food\tCost of Transport\n");
+    int i;
+    for(i = 0; i < numberOfRegions; i++)
+    {
+        printf("%s\t", results[i].regionName);
+        printf("%s\t\t", results[i].foodType);
+        printf("%d\t\t", results[i].foodSaved);
+        printf("%d\t\t", results[i].foodWasted);
+        printf("%.2lf\t\t", results[i].costOfUnits);
+        printf("%.2lf\n", results[i].costOfTransport);
+    }
+
+    /*
+     * Result format:
+     * Region    food type    food saved    food wasted    cost of food    cost of transport
+     * region1   Eggs        126            35            430.12           232.12
+     * region2   Seafood     832            793           1534.54          12.2
+     * Mogens    bakedgoods  23             46            242.75           971.23
+     * Robert    meat        427            0             623.84           726.45
+     */
 
 }
 
@@ -186,7 +346,9 @@ void outputResult() {
 int main() {
 
     char input;
+    int numberOfRegions, numOfIterations;
     RegionStruct* regions;
+    RegionResultStruct* results;
 
     //ask if user wants to read file or terminal
     printf("Would you like to load a file? (y/n)");
@@ -194,27 +356,32 @@ int main() {
         scanf("%c", &input);
 
         if(input == 'y'){
-            regions = readFile();
+            regions = readFile(&numberOfRegions);
+            results = malloc(sizeof (RegionResultStruct) * numberOfRegions);
             break;
         } else if(input == 'n') {
-            regions = readFromTerminal();
+            regions = readFromTerminal(&numberOfRegions);
+            results = malloc(sizeof (RegionResultStruct) * numberOfRegions);
             break;
         } else {
             printf("Please input 'y' or 'n'");
         }
     }
 
-    printf("%s, %d, %d, %d, %d, %d, %.2lf, %.2lf, %.2lf", regions[0].regionName, regions[0].foodType, regions[0].numOfProducers,
+    printf("please input number of days to simulate: ");
+    scanf(" %d", &numOfIterations);
+
+    printf("%s, %d, %d, %d, %d, %d, %.2lf, %.2lf, %.2lf\n", regions[0].regionName, regions[0].foodType, regions[0].numOfProducers,
            regions[0].baseExcessPerOrg[0], regions[0].numOfOrganizations, regions[0].demandPerOrg[0],
            regions[0].excessVolatility[0], regions[0].costPerUnit[0], regions[0].transportCost[0]);
 
+    calculateIteration(regions, results, numberOfRegions, numOfIterations);
+
+    outputResult(results, numberOfRegions);
+
+    saveFile(regions, numberOfRegions);
+
     free(regions);
-
-    calculateIteration();
-
-    outputResult();
-
-    saveFile();
 
     return 0;
 }

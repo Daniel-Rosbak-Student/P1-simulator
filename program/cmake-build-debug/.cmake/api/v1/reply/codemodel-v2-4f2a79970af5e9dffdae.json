@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/Daniel/Documents/GitHub/P1-simulator/program/cmake-build-debug",
-		"source" : "C:/Users/Daniel/Documents/GitHub/P1-simulator/program"
+		"build" : "C:/Users/ghorb/CLionProjects/P1-simulator/program/cmake-build-debug",
+		"source" : "C:/Users/ghorb/CLionProjects/P1-simulator/program"
 	},
 	"version" : 
 	{
