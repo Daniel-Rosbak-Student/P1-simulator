@@ -19,6 +19,15 @@ typedef struct {
 } RegionStruct;
 
 
+typedef struct {
+    char* regionName;
+    char* foodType;
+    int foodSaved;
+    int foodWasted;
+    double costOfUnits;
+    double costOfTransport;
+} RegionResultStruct;
+
 RegionStruct* readFile(int* numOfRegions) {
 
     RegionStruct* newRegion;
@@ -206,12 +215,73 @@ void saveFile(RegionStruct* region, int numOfRegions) {
 }
 
 
-void calculateIteration() {
+char* convertFoodtypeEnum(foodType input){
+    char* output;
+
+    switch (input) {
+        case SEAFOOD:
+            output = "Seafood";
+            break;
+        case BAKEDGOODS:
+            output = "Bakedgoods";
+            break;
+        case MEAT:
+            output = "Meat";
+            break;
+        case GREENS:
+            output = "Greens";
+            break;
+        case EGGS:
+            output = "Eggs";
+            break;
+        case DAIRY:
+            output = "Dairy";
+            break;
+        default:
+            output = "ERROR";
+    }
+    return output;
+}
+
+
+void calculateIteration(RegionStruct* regions, RegionResultStruct* results) {
+
+    for (int i = 0; i < 1; ++i) {
+        results[i].costOfTransport = regions[i].transportCost[i];
+        results[i].costOfUnits = regions[i].costPerUnit[i];
+        results[i].foodWasted = regions[i].baseExcessPerOrg[i];
+        results[i].foodSaved = regions[i].baseExcessPerOrg[i] * 1.2;
+        results[i].foodType = convertFoodtypeEnum(regions[i].foodType);
+        results[i].regionName = "mogens";
+    }
 
 }
 
 
-void outputResult() {
+void outputResult(RegionResultStruct* results, int numberOfRegions) {
+
+    int i;
+    for(i = 0; i < numberOfRegions; i++)
+    {
+        printf("Region\tFood type\tFood saved\tFood wasted\tCost of food\tCost of Transport\n");
+        printf("%s\t", results[i].regionName);
+        printf("%s\t\t", results[i].foodType);
+        printf("%d\t\t", results[i].foodSaved);
+        printf("%d\t\t", results[i].foodWasted);
+        printf("%.2lf\t\t", results[i].costOfUnits);
+        printf("%.2lf\n", results[i].costOfTransport);
+    }
+
+
+    /*
+     * Result format:
+     * Region    food type    food saved    food wasted    cost of food    cost of transport
+     * region1   Eggs        126            35            430.12           232.12
+     * region2   Seafood     832            793           1534.54          12.2
+     * Mogens    bakedgoods  23             46            242.75           971.23
+     * Robert    meat        427            0             623.84           726.45
+     */
+
 
 }
 
@@ -221,6 +291,7 @@ int main() {
     char input;
     int numberOfRegions;
     RegionStruct* regions;
+    RegionResultStruct* results;
 
     //ask if user wants to read file or termina l
     printf("Would you like to load a file? (y/n)");
@@ -229,22 +300,24 @@ int main() {
 
         if(input == 'y'){
             regions = readFile(&numberOfRegions);
+            results = malloc(sizeof (RegionResultStruct) * numberOfRegions);
             break;
         } else if(input == 'n') {
             regions = readFromTerminal(&numberOfRegions);
+            results = malloc(sizeof (RegionResultStruct) * numberOfRegions);
             break;
         } else {
             printf("Please input 'y' or 'n'");
         }
     }
 
-    printf("%s, %d, %d, %d, %d, %d, %.2lf, %.2lf, %.2lf", regions[0].regionName, regions[0].foodType, regions[0].numOfProducers,
+    printf("%s, %d, %d, %d, %d, %d, %.2lf, %.2lf, %.2lf\n", regions[0].regionName, regions[0].foodType, regions[0].numOfProducers,
            regions[0].baseExcessPerOrg[0], regions[0].numOfOrganizations, regions[0].demandPerOrg[0],
            regions[0].excessVolatility[0], regions[0].costPerUnit[0], regions[0].transportCost[0]);
 
-    calculateIteration();
+    calculateIteration(regions, results);
 
-    outputResult();
+    outputResult(results, numberOfRegions);
 
     saveFile(regions, numberOfRegions);
 
