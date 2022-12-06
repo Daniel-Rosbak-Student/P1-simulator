@@ -20,12 +20,16 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9638cd7f-d539-4ff7-b387-4d580fdd49e5" name="Changes" comment="Lili">
+    <list default="true" id="9638cd7f-d539-4ff7-b387-4d580fdd49e5" name="Changes" comment="06/12/2022 19:56 working on calculate iteration">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
     <list id="a15ff0ea-8442-4417-91d3-24a4cc6919bd" name="Changes by Daniel" comment="" />
     <list id="1ae8a366-877d-49d0-8d0d-e821c8c2aaf9" name="Changes by kristianwinther" comment="" />
+    <list id="0f6c5e5c-3aa9-4d27-a763-33fa6824e6f6" name="Changes by lilimarleenmoser" comment="">
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+    </list>
     <list id="b5b24816-526f-4dcd-ab25-9d8637ac877c" name="Changes by tobiasandersen" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +43,22 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/main.c">
+      <ranges>
+        <range start1="275" end1="275" start2="275" end2="276" changelist="0f6c5e5c-3aa9-4d27-a763-33fa6824e6f6" />
+        <range start1="277" end1="277" start2="278" end2="280" changelist="0f6c5e5c-3aa9-4d27-a763-33fa6824e6f6" />
+        <range start1="278" end1="278" start2="281" end2="291" changelist="0f6c5e5c-3aa9-4d27-a763-33fa6824e6f6" />
+        <range start1="279" end1="281" start2="292" end2="300" changelist="0f6c5e5c-3aa9-4d27-a763-33fa6824e6f6" />
+        <range start1="282" end1="282" start2="301" end2="310" changelist="0f6c5e5c-3aa9-4d27-a763-33fa6824e6f6" />
+        <range start1="283" end1="287" start2="311" end2="320" changelist="9638cd7f-d539-4ff7-b387-4d580fdd49e5" />
+        <range start1="288" end1="288" start2="321" end2="329" changelist="9638cd7f-d539-4ff7-b387-4d580fdd49e5" />
+        <range start1="289" end1="289" start2="330" end2="332" changelist="9638cd7f-d539-4ff7-b387-4d580fdd49e5" />
+        <range start1="291" end1="291" start2="334" end2="342" changelist="9638cd7f-d539-4ff7-b387-4d580fdd49e5" />
+        <range start1="295" end1="316" start2="346" end2="346" changelist="9638cd7f-d539-4ff7-b387-4d580fdd49e5" />
+      </ranges>
+    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -54,21 +74,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Daniel/Documents/GitHub/P1-simulator/program&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "last_opened_file_path": "C:/Users/Daniel/Documents/GitHub/P1-simulator/program",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="program" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="program" TARGET_NAME="program" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="program" RUN_TARGET_NAME="program">
       <method v="2">
@@ -90,6 +111,7 @@
       <workItem from="1669886923725" duration="2123000" />
       <workItem from="1669890690093" duration="49000" />
       <workItem from="1670347607558" duration="98000" />
+      <workItem from="1670351133060" duration="1913000" />
     </task>
     <task id="LOCAL-00001" summary="Lili">
       <created>1669628036402</created>
@@ -131,6 +153,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Lili" />
-    <option name="LAST_COMMIT_MESSAGE" value="Lili" />
+    <MESSAGE value="06/12/2022 19:56 working on calculate iteration" />
+    <option name="LAST_COMMIT_MESSAGE" value="06/12/2022 19:56 working on calculate iteration" />
   </component>
 </project>

@@ -273,47 +273,77 @@ char* convertFoodtypeEnum(foodType input){
 
 
 void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int numOfRegions, int numOfIterations) {
+
     //Here we simulate the given amount of days
     for (int i = 0; i < numOfIterations; ++i) {
-        for (int j = 0; j < numOfRegions; ++j) {
-            for (int k = 0; k < regions[j].numOfOrganizations; ++k) {
-                //calculate numbers
-                while (regions[j].demandPerOrg[k] > 0) {
-                    int cheapestProducersIndex = 0;
-                    for (int l = 0; l < regions[j].numOfProducers; ++l) {
-                        if (regions[j].baseExcessPerOrg > 0) {
-                            if (regions[j].baseExcessPerOrg[l] >= regions[j].demandPerOrg[k]) {
-                                (regions[j].transportCost[l] * regions[j].distanceToOrg[k]);
-                            } else {
 
+        // repeat for each region
+        for (int j = 0; j < numOfRegions; ++j) {
+
+            // repeat for each organization
+            int* dayToDaySupply;
+
+            dayToDaySupply = malloc(sizeof (int) * regions[j].numOfProducers);
+
+            for (int k = 0; k < regions[j].numOfProducers; ++k) {
+                dayToDaySupply[k] = regions[j].baseExcessPerOrg[k];
+            }
+
+            for (int k = 0; k < regions[j].numOfOrganizations; ++k) {
+
+                //calculate cheapest "option" while demand is over 0
+                int dayToDayDemand = regions[j].demandPerOrg[k];
+
+                for (int h = 0; h < regions[j].numOfProducers; ++h) {
+
+                    // an int to save combination/producer to distribute from
+                    // this is used again later to update supply and demand numbers
+                    int cheapestProducersIndex = 0;
+
+                    // a double variable to find the cheapest combination
+                    double lowestCost, newCost;
+
+                    // calculating unit cost + transport cost per organization
+                    lowestCost = (regions[j].costPerUnit[0] * (double)regions[j].demandPerOrg[k]) +
+                    (regions[j].transportCost[0] * regions[j].distanceToOrg[k]);
+
+                    // finding the producer that can meet (some of) the demand at lowest costs
+                    for (int l = 0; l < regions[j].numOfProducers; ++l) {
+                        if (dayToDaySupply[l] > 0) {
+                            if (dayToDaySupply[l] >= regions[j].demandPerOrg[k]) {
+                                newCost = (regions[j].costPerUnit[l] * (double)regions[j].demandPerOrg[k]) +
+                                          (regions[j].transportCost[l] * regions[j].distanceToOrg[k]);
+                                if (newCost < lowestCost) {
+                                    lowestCost = newCost;
+                                    cheapestProducersIndex = l;
+                                }
                             }
+
+                            // if demand > 0, finds 2nd, 3rd, ... cheapest producer
+                            else {
+                                newCost = (regions[j].costPerUnit[l] * (double)dayToDaySupply[l]) +
+                                          (regions[j].transportCost[l] * regions[j].distanceToOrg[k]);
+                                if (newCost < lowestCost) {
+                                    lowestCost = newCost;
+                                    cheapestProducersIndex = l;
+                                }
+                            }
+                        } else {
+                            break;
                         }
+                    }
+                    if(dayToDayDemand <= 0) {
+                        int temp = dayToDayDemand;
+                        dayToDayDemand = dayToDayDemand - dayToDaySupply[cheapestProducersIndex];
+                        dayToDaySupply[cheapestProducersIndex] = dayToDaySupply[cheapestProducersIndex] - dayToDayDemand;
+                        break;
+                        //---------------------------------------------------------------------------------------------------------!!!!! TASK FOR WEDNESDAY
+                        //update result
                     }
                 }
             }
         }
     }
-    /*Cost of Transport
-             * Cost is at the moment fixed to each location's "Transport cost"
-             *
-             */
-
-
-    //find_best_route();
-
-
-
-
-
-
-    //Cost of Units
-
-
-
-
-
-
-
 }
 
 
