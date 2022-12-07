@@ -23,11 +23,11 @@ typedef struct {
 
 typedef struct {
     char* regionName;
-    char* foodType;
+    foodType foodType;
     int foodSaved;
     int foodWasted;
-    double costOfUnits;
-    double costOfTransport;
+    int unmetDemand;
+    double totalCost;
 } RegionResultStruct;
 
 //if the user chooses to load settings from a file, this function is called
@@ -318,8 +318,6 @@ void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int 
                                     cheapestProducersIndex = l;
                                 }
                             }
-
-                            // if demand > 0, finds 2nd, 3rd, ... cheapest producer
                             else {
                                 newCost = (regions[j].costPerUnit[l] * (double)dayToDaySupply[l]) +
                                           (regions[j].transportCost[l] * regions[j].distanceToOrg[k]);
@@ -332,15 +330,28 @@ void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int 
                             break;
                         }
                     }
-                    if(dayToDayDemand <= 0) {
-                        int temp = dayToDayDemand;
-                        dayToDayDemand = dayToDayDemand - dayToDaySupply[cheapestProducersIndex];
-                        dayToDaySupply[cheapestProducersIndex] = dayToDaySupply[cheapestProducersIndex] - dayToDayDemand;
+                    //we save the price and food saved from cheapest producer, and update daytodaysupply and -demand
+                    if(dayToDaySupply[cheapestProducersIndex] >= regions[j].demandPerOrg[k]) {
+                        results[j].foodSaved += regions[j].demandPerOrg[k];
+                        results[j].totalCost += (regions[j].costPerUnit[cheapestProducersIndex] * (double)regions[j].demandPerOrg[k]) +
+                                                (regions[j].transportCost[cheapestProducersIndex] * regions[j].distanceToOrg[k]);
+                        dayToDaySupply[cheapestProducersIndex] -= dayToDayDemand;
+                        dayToDayDemand -= dayToDayDemand;
                         break;
-                        //---------------------------------------------------------------------------------------------------------!!!!! TASK FOR WEDNESDAY
-                        //update result
+                    } else {
+                        results[j].foodSaved += dayToDaySupply[cheapestProducersIndex];
+                        results[j].totalCost += (regions[j].costPerUnit[cheapestProducersIndex] * (double)dayToDaySupply[cheapestProducersIndex]) +
+                                                (regions[j].transportCost[cheapestProducersIndex] * regions[j].distanceToOrg[k]);
+                        int temp = dayToDayDemand;
+                        dayToDayDemand -= dayToDaySupply[cheapestProducersIndex];
+                        dayToDaySupply[cheapestProducersIndex] -= temp;
                     }
                 }
+                //we add excess produce to foodwasted
+                for (int l = 0; l < regions[j].numOfProducers; ++l) {
+                    results[j].foodWasted += dayToDaySupply[l];
+                }
+                results[j].unmetDemand += dayToDayDemand;
             }
         }
     }
@@ -354,11 +365,11 @@ void outputResult(RegionResultStruct* results, int numberOfRegions) {
     for(i = 0; i < numberOfRegions; i++)
     {
         printf("%s\t", results[i].regionName);
-        printf("%s\t\t", results[i].foodType);
+        printf("%s\t\t", convertFoodtypeEnum(results[i].foodType));
         printf("%d\t\t", results[i].foodSaved);
         printf("%d\t\t", results[i].foodWasted);
-        printf("%.2lf\t\t", results[i].costOfUnits);
-        printf("%.2lf\n", results[i].costOfTransport);
+        printf("%d\t\t", results[i].unmetDemand);
+        printf("%.2lf\t\t", results[i].totalCost);
     }
 
     /*
