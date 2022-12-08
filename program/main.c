@@ -286,12 +286,14 @@ void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int 
 
         supplyArray[i] = dayToDaySupply;
         for (int j = 0; j < regions[i].numOfProducers; ++j) {
-            supplyArray[i][j] = 0;
+            supplyArray[i][j] = regions[i].baseExcessPerOrg[j];
         }
     }
 
+    int daysPassed = 0;
+
     //Here we simulate the given amount of days
-    for (int i = 0; i < numOfIterations; ++i) {
+    for (int i = 0; i < numOfIterations; ++i, ++daysPassed) {
 
         // repeat for each region
         for (int j = 0; j < numOfRegions; ++j) {
