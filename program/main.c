@@ -351,9 +351,14 @@ void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int 
                 for (int l = 0; l < regions[j].numOfProducers; ++l) {
                     results[j].foodWasted += dayToDaySupply[l];
                 }
+                //we add excess demand to the unmetdemand result
                 results[j].unmetDemand += dayToDayDemand;
             }
+
+            //output result for this region in this iteration
         }
+
+        //output something to segment iterations
     }
 }
 
