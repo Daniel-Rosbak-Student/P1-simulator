@@ -274,7 +274,7 @@ char* convertFoodtypeEnum(foodType input){
 
 void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int numOfRegions, int numOfIterations) {
 
-    int** supplyArray = malloc(sizeof (int*) * numOfRegions);
+   int** supplyArray = malloc(sizeof (int*) * numOfRegions);
 
     for (int i = 0; i < numOfRegions; ++i) {
         results[i].regionName = regions[i].regionName;
@@ -374,7 +374,7 @@ void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int 
 
         //output something to segment iterations
     }
-    for (int i = 0; i < numOfRegions; ++i) {
+   for (int i = 0; i < numOfRegions; ++i) {
         for (int l = 0; l < regions[i].numOfProducers; ++l) {
             results[i].foodWasted += supplyArray[i][l];
         }
