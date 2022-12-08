@@ -274,6 +274,22 @@ char* convertFoodtypeEnum(foodType input){
 
 void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int numOfRegions, int numOfIterations) {
 
+    int** supplyArray = malloc(sizeof (int*) * numOfRegions);
+
+    for (int i = 0; i < numOfRegions; ++i) {
+        results[i].regionName = regions[i].regionName;
+        results[i].foodType = regions[i].foodType;
+        results[i].foodSaved = 0;
+
+        int* dayToDaySupply;
+        dayToDaySupply = malloc(sizeof (int) * regions[i].numOfProducers);
+
+        supplyArray[i] = dayToDaySupply;
+        for (int j = 0; j < regions[i].numOfProducers; ++j) {
+            supplyArray[i][j] = 0;
+        }
+    }
+
     //Here we simulate the given amount of days
     for (int i = 0; i < numOfIterations; ++i) {
 
@@ -281,12 +297,12 @@ void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int 
         for (int j = 0; j < numOfRegions; ++j) {
 
             // repeat for each organization
-            int* dayToDaySupply;
-
-            dayToDaySupply = malloc(sizeof (int) * regions[j].numOfProducers);
-
             for (int k = 0; k < regions[j].numOfProducers; ++k) {
-                dayToDaySupply[k] = regions[j].baseExcessPerOrg[k];
+                if ((supplyArray[j][k] / regions[j].baseExcessPerOrg[k]) >= regions[j].foodType) {
+                    supplyArray[j][k] -= regions[j].baseExcessPerOrg[k] * ((supplyArray[j][k] / regions[j].baseExcessPerOrg[k]) - (regions[j].foodType - 1));
+                    results[j].foodWasted -= regions[j].baseExcessPerOrg[k] * ((supplyArray[j][k] / regions[j].baseExcessPerOrg[k]) - (regions[j].foodType) - 1);
+                }
+                supplyArray[j][k] += regions[j].baseExcessPerOrg[k];
             }
 
             for (int k = 0; k < regions[j].numOfOrganizations; ++k) {
@@ -309,8 +325,8 @@ void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int 
 
                     // finding the producer that can meet (some of) the demand at lowest costs
                     for (int l = 0; l < regions[j].numOfProducers; ++l) {
-                        if (dayToDaySupply[l] > 0) {
-                            if (dayToDaySupply[l] >= regions[j].demandPerOrg[k]) {
+                        if (supplyArray[j][l] > 0) {
+                            if (supplyArray[j][l] >= dayToDayDemand) {
                                 newCost = (regions[j].costPerUnit[l] * (double)regions[j].demandPerOrg[k]) +
                                           (regions[j].transportCost[l] * regions[j].distanceToOrg[k]);
                                 if (newCost < lowestCost) {
@@ -319,7 +335,7 @@ void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int 
                                 }
                             }
                             else {
-                                newCost = (regions[j].costPerUnit[l] * (double)dayToDaySupply[l]) +
+                                newCost = (regions[j].costPerUnit[l] * (double)supplyArray[j][l]) +
                                           (regions[j].transportCost[l] * regions[j].distanceToOrg[k]);
                                 if (newCost < lowestCost) {
                                     lowestCost = newCost;
@@ -331,26 +347,24 @@ void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int 
                         }
                     }
                     //we save the price and food saved from cheapest producer, and update daytodaysupply and -demand
-                    if(dayToDaySupply[cheapestProducersIndex] >= regions[j].demandPerOrg[k]) {
-                        results[j].foodSaved += regions[j].demandPerOrg[k];
+                    if(supplyArray[j][cheapestProducersIndex] >= dayToDayDemand) {
+                        results[j].foodSaved += dayToDayDemand;
                         results[j].totalCost += (regions[j].costPerUnit[cheapestProducersIndex] * (double)regions[j].demandPerOrg[k]) +
                                                 (regions[j].transportCost[cheapestProducersIndex] * regions[j].distanceToOrg[k]);
-                        dayToDaySupply[cheapestProducersIndex] -= dayToDayDemand;
+                        supplyArray[j][cheapestProducersIndex] -= dayToDayDemand;
                         dayToDayDemand -= dayToDayDemand;
                         break;
                     } else {
-                        results[j].foodSaved += dayToDaySupply[cheapestProducersIndex];
-                        results[j].totalCost += (regions[j].costPerUnit[cheapestProducersIndex] * (double)dayToDaySupply[cheapestProducersIndex]) +
+                        results[j].foodSaved += supplyArray[j][cheapestProducersIndex];
+                        results[j].totalCost += (regions[j].costPerUnit[cheapestProducersIndex] * (double)supplyArray[j][cheapestProducersIndex]) +
                                                 (regions[j].transportCost[cheapestProducersIndex] * regions[j].distanceToOrg[k]);
                         int temp = dayToDayDemand;
-                        dayToDayDemand -= dayToDaySupply[cheapestProducersIndex];
-                        dayToDaySupply[cheapestProducersIndex] -= temp;
+                        dayToDayDemand -= supplyArray[j][cheapestProducersIndex];
+                        supplyArray[j][cheapestProducersIndex] -= supplyArray[j][cheapestProducersIndex];
                     }
                 }
                 //we add excess produce to foodwasted
-                for (int l = 0; l < regions[j].numOfProducers; ++l) {
-                    results[j].foodWasted += dayToDaySupply[l];
-                }
+
                 //we add excess demand to the unmetdemand result
                 results[j].unmetDemand += dayToDayDemand;
             }
@@ -360,12 +374,20 @@ void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int 
 
         //output something to segment iterations
     }
+    for (int i = 0; i < numOfRegions; ++i) {
+        for (int l = 0; l < regions[i].numOfProducers; ++l) {
+            results[i].foodWasted += supplyArray[i][l];
+        }
+        free(supplyArray[i]);
+    }
+
+    free(supplyArray);
 }
 
 
 void outputResult(RegionResultStruct* results, int numberOfRegions) {
 
-    printf("Region\tFood type\tFood saved\tFood wasted\tCost of food\tCost of Transport\n");
+    printf("Region\tFood type\tFood saved\tFood wasted\tUnmet demand\tTotal cost\n");
     int i;
     for(i = 0; i < numberOfRegions; i++)
     {
