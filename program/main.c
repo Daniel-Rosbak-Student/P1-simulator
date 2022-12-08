@@ -296,13 +296,11 @@ void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int 
         // repeat for each region
         for (int j = 0; j < numOfRegions; ++j) {
 
-            // repeat for each organization
-            for (int k = 0; k < regions[j].numOfProducers; ++k) {
-                if ((supplyArray[j][k] / regions[j].baseExcessPerOrg[k]) >= regions[j].foodType) {
-                    supplyArray[j][k] -= regions[j].baseExcessPerOrg[k] * ((supplyArray[j][k] / regions[j].baseExcessPerOrg[k]) - (regions[j].foodType - 1));
-                    results[j].foodWasted -= regions[j].baseExcessPerOrg[k] * ((supplyArray[j][k] / regions[j].baseExcessPerOrg[k]) - (regions[j].foodType) - 1);
+            if (daysPassed % regions[j].foodType == 0) {
+                for (int k = 0; k < regions[j].numOfProducers; ++k) {
+                    results[j].foodWasted += supplyArray[j][k];
+                    supplyArray[j][k] = regions[j].baseExcessPerOrg[k];
                 }
-                supplyArray[j][k] += regions[j].baseExcessPerOrg[k];
             }
 
             for (int k = 0; k < regions[j].numOfOrganizations; ++k) {

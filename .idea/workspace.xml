@@ -17,39 +17,21 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" name="Changes" comment="Ben 06/12">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_12_2022_19_15__Changes_by_Daniel_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_12_2022_19_15__Changes_by_Daniel_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_12_2022_19_15__Changes_by_Daniel_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_12_2022_19_15__Changes_by_Daniel_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_12_2022_19_15__Changes_by_lilimarleenmoser_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_12_2022_19_15__Changes_by_lilimarleenmoser_.xml" afterDir="false" />
+    <list default="true" id="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" name="Changes" comment="Ben 08/12">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/.cmake/api/v1/reply/cache-v2-7dd1351a972c82663669.json" beforeDir="false" afterPath="$PROJECT_DIR$/program/cmake-build-debug/.cmake/api/v1/reply/cache-v2-7dd1351a972c82663669.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-4eae5add14ea8080631d.json" beforeDir="false" afterPath="$PROJECT_DIR$/program/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-4eae5add14ea8080631d.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/.cmake/api/v1/reply/index-2022-12-02T08-42-34-0651.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/.cmake/api/v1/reply/target-program-Debug-4a4d193055adfe88a01b.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-3e6b1741ae38f0623953.json" beforeDir="false" afterPath="$PROJECT_DIR$/program/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-3e6b1741ae38f0623953.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/program/cmake-build-debug/.ninja_deps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/program/cmake-build-debug/.ninja_log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/CMakeFiles/3.24.2/CMakeCCompiler.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/CMakeFiles/3.24.2/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/CMakeFiles/3.24.2/CMakeRCCompiler.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/CMakeFiles/3.24.2/CMakeSystem.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/CMakeFiles/3.24.2/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/CMakeFiles/3.24.2/CompilerIdC/a.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/program/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" afterPath="$PROJECT_DIR$/program/cmake-build-debug/CMakeFiles/clion-environment.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/CMakeFiles/program.dir/main.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/program/cmake-build-debug/CMakeFiles/program.dir/main.c.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/Result.txt" beforeDir="false" afterPath="$PROJECT_DIR$/program/cmake-build-debug/Result.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/program/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/program.exe" beforeDir="false" afterPath="$PROJECT_DIR$/program/cmake-build-debug/program.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/program/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/program/main.c" afterDir="false" />
     </list>
     <list id="8f521a64-5772-46f0-8106-9b1df94d69e3" name="Changes by Daniel" comment="6/12">
-      <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/settings.txt" beforeDir="false" afterPath="$PROJECT_DIR$/program/cmake-build-debug/settings.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/program/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/program/main.c" afterDir="false" />
     </list>
-    <list id="82cb89ef-e893-4de0-b5cd-ba02bb95c111" name="Changes by lilimarleenmoser" comment="Changes by lilimarleenmoser" />
+    <list id="82cb89ef-e893-4de0-b5cd-ba02bb95c111" name="Changes by lilimarleenmoser" comment="Changes by lilimarleenmoser">
+      <change beforePath="$PROJECT_DIR$/program/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/program/main.c" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -65,19 +47,13 @@
   <component name="LineStatusTrackerManager">
     <file path="$PROJECT_DIR$/program/main.c">
       <ranges>
-        <range start1="2" end1="3" start2="2" end2="3" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
-        <range start1="276" end1="276" start2="276" end2="292" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
-        <range start1="283" end1="287" start2="299" end2="299" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
-        <range start1="288" end1="289" start2="300" end2="305" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
-        <range start1="311" end1="313" start2="327" end2="329" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
-        <range start1="321" end1="322" start2="337" end2="338" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
-        <range start1="333" end1="335" start2="349" end2="351" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
-        <range start1="337" end1="338" start2="353" end2="354" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
-        <range start1="341" end1="343" start2="357" end2="359" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
-        <range start1="345" end1="347" start2="361" end2="363" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
-        <range start1="350" end1="353" start2="366" end2="367" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
-        <range start1="362" end1="362" start2="376" end2="384" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
-        <range start1="367" end1="368" start2="389" end2="390" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
+        <range start1="276" end1="277" start2="276" end2="277" changelist="82cb89ef-e893-4de0-b5cd-ba02bb95c111" />
+        <range start1="288" end1="289" start2="288" end2="289" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
+        <range start1="292" end1="292" start2="292" end2="294" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
+        <range start1="293" end1="294" start2="295" end2="296" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
+        <range start1="298" end1="303" start2="300" end2="304" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="304" end1="305" start2="305" end2="305" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="376" end1="377" start2="376" end2="377" changelist="82cb89ef-e893-4de0-b5cd-ba02bb95c111" />
       </ranges>
     </file>
   </component>
@@ -131,7 +107,7 @@
       <workItem from="1670346823192" duration="134000" />
       <workItem from="1670346990838" duration="3540000" />
       <workItem from="1670350669429" duration="1000" />
-      <workItem from="1670487577317" duration="3195000" />
+      <workItem from="1670487577317" duration="4461000" />
     </task>
     <task id="LOCAL-00001" summary="Ben 05/12">
       <created>1670314129757</created>
@@ -147,7 +123,21 @@
       <option name="project" value="LOCAL" />
       <updated>1670350474477</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Ben 08/12">
+      <created>1670490913626</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1670490913626</updated>
+    </task>
+    <task id="LOCAL-00004" summary="6/12">
+      <created>1670490945163</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1670490945163</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,9 +158,10 @@
     <MESSAGE value="Ben 05/12" />
     <MESSAGE value="Ben 06/12" />
     <MESSAGE value="Changes by Daniel" />
-    <MESSAGE value="6/12" />
     <MESSAGE value="Changes by lilimarleenmoser" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes by lilimarleenmoser" />
+    <MESSAGE value="Ben 08/12" />
+    <MESSAGE value="6/12" />
+    <option name="LAST_COMMIT_MESSAGE" value="6/12" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
