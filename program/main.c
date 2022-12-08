@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <malloc.h>
 
 // food type is given as enum, where the int values are the number of days the food products last in the fridge
 // this helps us with our calculations, as well as makes it easy for the user to input food type
