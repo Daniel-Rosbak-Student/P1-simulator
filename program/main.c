@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <malloc.h>
 
-
-// food type defined as enum, where the int values refer to how many days the products last in the fridge
-// this makes it easy for the user to enter food type
+// food type is given as enum, where the int values are the number of days the food products last in the fridge
+// this helps us with our calculations, as well as makes it easy for the user to input food type
 typedef enum {SEAFOOD = 3, BAKEDGOODS = 4, MEAT = 5, GREENS = 6, EGGS = 7, DAIRY = 8} foodType;
 
 
@@ -14,6 +14,7 @@ typedef struct {
     int* baseExcessPerOrg;
     int numOfOrganizations;
     int* demandPerOrg;
+    double* distanceToOrg;
     double* excessVolatility;
     double* costPerUnit;
     double* transportCost;
@@ -22,21 +23,28 @@ typedef struct {
 
 typedef struct {
     char* regionName;
-    char* foodType;
+    foodType foodType;
     int foodSaved;
     int foodWasted;
-    double costOfUnits;
-    double costOfTransport;
+    int unmetDemand;
+    double totalCost;
 } RegionResultStruct;
 
+//if the user chooses to load settings from a file, this function is called
 RegionStruct* readFile(int* numOfRegions) {
+
+// reads the file given by the user for data for the region(s)
 
     RegionStruct* newRegion;
 
+// open the file and load how many regions there are
     FILE* regionsFile = fopen("settings.txt", "r");
     fscanf(regionsFile, " %d%*c", numOfRegions);
 
+// allocating memory with malloc for our region structs (array if more than 1 region)
     newRegion = malloc(sizeof (RegionStruct) * *numOfRegions);
+
+    // for-loop for loading all data for regions
 
     for (int i = 0; i < *numOfRegions; ++i) {
         fscanf(regionsFile, " %[0-9A-Za-z]%*c %u%*c %d%*c", newRegion[i].regionName,
@@ -63,6 +71,13 @@ RegionStruct* readFile(int* numOfRegions) {
             fscanf(regionsFile, " %d%*c", &newRegion[i].demandPerOrg[j]);
         }
 
+        newRegion[i].distanceToOrg = malloc(sizeof (int) * newRegion[i].numOfOrganizations);
+
+        //we scan the distance to each organization
+        for (int j = 0; j < newRegion[i].numOfOrganizations; ++j) {
+            fscanf(regionsFile, " %lf%*c", &newRegion[i].distanceToOrg[j]);
+        }
+
         //we scan excess volatility for each producer
         for (int j = 0; j < newRegion[i].numOfProducers; ++j) {
             fscanf(regionsFile, " %lf%*c", &newRegion[i].excessVolatility[j]);
@@ -73,7 +88,7 @@ RegionStruct* readFile(int* numOfRegions) {
             fscanf(regionsFile, " %lf%*c", &newRegion[i].costPerUnit[j]);
         }
 
-        //we scan transport cost for each producer
+        //we scan transport cost per km for each producer
         for (int j = 0; j < newRegion[i].numOfProducers; ++j) {
             fscanf(regionsFile, " %lf%*c", &newRegion[i].transportCost[j]);
         }
@@ -82,21 +97,14 @@ RegionStruct* readFile(int* numOfRegions) {
     return newRegion;
 }
 
-<<<<<<< HEAD
-
-=======
-// if the user chooses to input data themselves
->>>>>>> parent of 98a35cb (Ben 06/12)
+// if the user chooses to input data themselves this function is called
 RegionStruct* readFromTerminal(int* numOfRegions) {
     int regions, producers, organizations, foodtype;
 
     printf("Please enter the number of regions: ");
     scanf(" %d", numOfRegions);
 
-<<<<<<< HEAD
-=======
-    // allocating memory for the region struct
->>>>>>> parent of 98a35cb (Ben 06/12)
+    // allocating memory for the region struct(s) based on the number of regions
     RegionStruct* newRegion = malloc(sizeof(RegionStruct) * *numOfRegions);
 
     for (int i = 0; i < *numOfRegions; ++i) {
@@ -108,6 +116,8 @@ RegionStruct* readFromTerminal(int* numOfRegions) {
         scanf(" %d", &producers);
 
         newRegion[i].numOfProducers = producers;
+
+        // allocating memory for excess, volatility, cost per unit and transport cost based on the number of producers
         newRegion[i].baseExcessPerOrg = malloc(sizeof(int) * producers);
         newRegion[i].excessVolatility = malloc(sizeof(double) * producers);
         newRegion[i].costPerUnit = malloc(sizeof(double) * producers);
@@ -128,6 +138,7 @@ RegionStruct* readFromTerminal(int* numOfRegions) {
         printf("Type 6 for eggs\n");
         scanf(" %d", &foodtype);
 
+        // switch to "translate" the user input to our enum values for food type
         switch(foodtype){
             case 1:
                 newRegion[i].foodType = MEAT;
@@ -164,7 +175,7 @@ RegionStruct* readFromTerminal(int* numOfRegions) {
             scanf(" %lf", &newRegion[i].costPerUnit[j]);
         }
 
-        printf("Please enter transportation costs of the excess food per producer (seperated by space): ");
+        printf("Please enter transportation cost per km of the excess food per producer (seperated by space): ");
 
         for (int j = 0; j < producers; ++j){
             scanf(" %lf", &newRegion[i].transportCost[j]);
@@ -173,13 +184,21 @@ RegionStruct* readFromTerminal(int* numOfRegions) {
         printf("How many organizations in the region?: ");
         scanf(" %d", &organizations);
 
+        // using the user input for number of organizations, allocating memory accordingly for demand and distance
         newRegion[i].numOfOrganizations = organizations;
         newRegion[i].demandPerOrg = malloc(sizeof(int) * organizations);
+        newRegion[i].distanceToOrg = malloc(sizeof(int) * organizations);
 
         printf("Please enter demand per organization (seperated by space): ");
 
-        for (int j = 0; j < producers; ++j){
+        for (int j = 0; j < organizations; ++j){
             scanf(" %d", &newRegion[i].demandPerOrg[j]);
+        }
+
+        printf("Please enter distance to each organization (seperated by space): ");
+
+        for (int j = 0; j < organizations; ++j){
+            scanf(" %lf", &newRegion[i].distanceToOrg[j]);
         }
     }
     return newRegion;
@@ -253,48 +272,131 @@ char* convertFoodtypeEnum(foodType input){
 }
 
 
-<<<<<<< HEAD
-void calculateIteration(RegionStruct* regions, RegionResultStruct* results) {
-=======
 void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int numOfRegions, int numOfIterations) {
-    //Here we simulate the given amount of days
-    for (int i = 0; i < numOfIterations; ++i) {
-        for (int j = 0; j < numOfRegions; ++j) {
-            for (int k = 0; k < regions[j].numOfOrganizations; ++k) {
-                //calculate numbers
-                while (regions[j].demandPerOrg[k] > 0) {
-                    int cheapestProducersIndex = 0;
-                    for (int l = 0; l < regions[j].numOfProducers; ++l) {
-                        if (regions[j].baseExcessPerOrg > 0) {
-                            if (regions[j].baseExcessPerOrg[l] >= regions[j].demandPerOrg[k]) {
-                                (regions[j]. regions[j].transportCost[l] * regions[j].distanceToOrg[k]);
-                            } else {
->>>>>>> parent of 98a35cb (Ben 06/12)
 
-    for (int i = 0; i < 1; ++i) {
-        results[i].costOfTransport = regions[i].transportCost[i];
-        results[i].costOfUnits = regions[i].costPerUnit[i];
-        results[i].foodWasted = regions[i].baseExcessPerOrg[i];
-        results[i].foodSaved = regions[i].baseExcessPerOrg[i] * 1.2;
-        results[i].foodType = convertFoodtypeEnum(regions[i].foodType);
-        results[i].regionName = "mogens";
+   int** supplyArray = malloc(sizeof (int*) * numOfRegions);
+
+    for (int i = 0; i < numOfRegions; ++i) {
+        results[i].regionName = regions[i].regionName;
+        results[i].foodType = regions[i].foodType;
+        results[i].foodSaved = 0;
+
+        int* dayToDaySupply;
+        dayToDaySupply = malloc(sizeof (int) * regions[i].numOfProducers);
+
+        supplyArray[i] = dayToDaySupply;
+        for (int j = 0; j < regions[i].numOfProducers; ++j) {
+            supplyArray[i][j] = regions[i].baseExcessPerOrg[j];
+        }
     }
 
+    int daysPassed = 0;
+
+    //Here we simulate the given amount of days
+    for (int i = 0; i < numOfIterations; ++i, ++daysPassed) {
+
+        // repeat for each region
+        for (int j = 0; j < numOfRegions; ++j) {
+
+            if (daysPassed % regions[j].foodType == 0) {
+                for (int k = 0; k < regions[j].numOfProducers; ++k) {
+                    results[j].foodWasted += supplyArray[j][k];
+                    supplyArray[j][k] = regions[j].baseExcessPerOrg[k];
+                }
+            }
+
+            for (int k = 0; k < regions[j].numOfOrganizations; ++k) {
+
+                //calculate cheapest "option" while demand is over 0
+                int dayToDayDemand = regions[j].demandPerOrg[k];
+
+                for (int h = 0; h < regions[j].numOfProducers; ++h) {
+
+                    // an int to save combination/producer to distribute from
+                    // this is used again later to update supply and demand numbers
+                    int cheapestProducersIndex = 0;
+
+                    // a double variable to find the cheapest combination
+                    double lowestCost, newCost;
+
+                    // calculating unit cost + transport cost per organization
+                    lowestCost = (regions[j].costPerUnit[0] * (double)regions[j].demandPerOrg[k]) +
+                    (regions[j].transportCost[0] * regions[j].distanceToOrg[k]);
+
+                    // finding the producer that can meet (some of) the demand at lowest costs
+                    for (int l = 0; l < regions[j].numOfProducers; ++l) {
+                        if (supplyArray[j][l] > 0) {
+                            if (supplyArray[j][l] >= dayToDayDemand) {
+                                newCost = (regions[j].costPerUnit[l] * (double)regions[j].demandPerOrg[k]) +
+                                          (regions[j].transportCost[l] * regions[j].distanceToOrg[k]);
+                                if (newCost < lowestCost) {
+                                    lowestCost = newCost;
+                                    cheapestProducersIndex = l;
+                                }
+                            }
+                            else {
+                                newCost = (regions[j].costPerUnit[l] * (double)supplyArray[j][l]) +
+                                          (regions[j].transportCost[l] * regions[j].distanceToOrg[k]);
+                                if (newCost < lowestCost) {
+                                    lowestCost = newCost;
+                                    cheapestProducersIndex = l;
+                                }
+                            }
+                        } else {
+                            break;
+                        }
+                    }
+                    //we save the price and food saved from cheapest producer, and update daytodaysupply and -demand
+                    if(supplyArray[j][cheapestProducersIndex] >= dayToDayDemand) {
+                        results[j].foodSaved += dayToDayDemand;
+                        results[j].totalCost += (regions[j].costPerUnit[cheapestProducersIndex] * (double)regions[j].demandPerOrg[k]) +
+                                                (regions[j].transportCost[cheapestProducersIndex] * regions[j].distanceToOrg[k]);
+                        supplyArray[j][cheapestProducersIndex] -= dayToDayDemand;
+                        dayToDayDemand -= dayToDayDemand;
+                        break;
+                    } else {
+                        results[j].foodSaved += supplyArray[j][cheapestProducersIndex];
+                        results[j].totalCost += (regions[j].costPerUnit[cheapestProducersIndex] * (double)supplyArray[j][cheapestProducersIndex]) +
+                                                (regions[j].transportCost[cheapestProducersIndex] * regions[j].distanceToOrg[k]);
+                        int temp = dayToDayDemand;
+                        dayToDayDemand -= supplyArray[j][cheapestProducersIndex];
+                        supplyArray[j][cheapestProducersIndex] -= supplyArray[j][cheapestProducersIndex];
+                    }
+                }
+                //we add excess produce to foodwasted
+
+                //we add excess demand to the unmetdemand result
+                results[j].unmetDemand += dayToDayDemand;
+            }
+
+            //output result for this region in this iteration
+        }
+
+        //output something to segment iterations
+    }
+   for (int i = 0; i < numOfRegions; ++i) {
+        for (int l = 0; l < regions[i].numOfProducers; ++l) {
+            results[i].foodWasted += supplyArray[i][l];
+        }
+        free(supplyArray[i]);
+    }
+
+    free(supplyArray);
 }
 
 
 void outputResult(RegionResultStruct* results, int numberOfRegions) {
 
+    printf("Region\tFood type\tFood saved\tFood wasted\tUnmet demand\tTotal cost\n");
     int i;
     for(i = 0; i < numberOfRegions; i++)
     {
-        printf("Region\tFood type\tFood saved\tFood wasted\tCost of food\tCost of Transport\n");
         printf("%s\t", results[i].regionName);
-        printf("%s\t\t", results[i].foodType);
+        printf("%s\t\t", convertFoodtypeEnum(results[i].foodType));
         printf("%d\t\t", results[i].foodSaved);
         printf("%d\t\t", results[i].foodWasted);
-        printf("%.2lf\t\t", results[i].costOfUnits);
-        printf("%.2lf\n", results[i].costOfTransport);
+        printf("%d\t\t", results[i].unmetDemand);
+        printf("%.2lf\t\t", results[i].totalCost);
     }
 
     /*
@@ -312,7 +414,7 @@ void outputResult(RegionResultStruct* results, int numberOfRegions) {
 int main() {
 
     char input;
-    int numberOfRegions;
+    int numberOfRegions, numOfIterations;
     RegionStruct* regions;
     RegionResultStruct* results;
 
@@ -334,11 +436,14 @@ int main() {
         }
     }
 
+    printf("please input number of days to simulate: ");
+    scanf(" %d", &numOfIterations);
+
     printf("%s, %d, %d, %d, %d, %d, %.2lf, %.2lf, %.2lf\n", regions[0].regionName, regions[0].foodType, regions[0].numOfProducers,
            regions[0].baseExcessPerOrg[0], regions[0].numOfOrganizations, regions[0].demandPerOrg[0],
            regions[0].excessVolatility[0], regions[0].costPerUnit[0], regions[0].transportCost[0]);
 
-    calculateIteration(regions, results);
+    calculateIteration(regions, results, numberOfRegions, numOfIterations);
 
     outputResult(results, numberOfRegions);
 

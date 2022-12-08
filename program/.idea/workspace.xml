@@ -20,12 +20,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9638cd7f-d539-4ff7-b387-4d580fdd49e5" name="Changes" comment="mogens">
+    <list default="true" id="9638cd7f-d539-4ff7-b387-4d580fdd49e5" name="Changes" comment="06/12/2022 19:56 working on calculate iteration">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
     <list id="a15ff0ea-8442-4417-91d3-24a4cc6919bd" name="Changes by Daniel" comment="" />
-    <list id="83fa05e4-1703-4894-a083-7a6634dfc5e2" name="Changes by nikla" comment="" />
+    <list id="cd3a6165-b788-47c1-a033-4b63bf82e12d" name="Changes by ghorb" comment="" />
+    <list id="1ae8a366-877d-49d0-8d0d-e821c8c2aaf9" name="Changes by kristianwinther" comment="" />
+    <list id="0f6c5e5c-3aa9-4d27-a763-33fa6824e6f6" name="Changes by lilimarleenmoser" comment="" />
     <list id="b5b24816-526f-4dcd-ab25-9d8637ac877c" name="Changes by tobiasandersen" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,23 +65,14 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/lilimarleenmoser/Documents/GitHub/P1-simulator/program/cmake-build-debug/CMakeFiles/program.dir&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Daniel/Documents/GitHub/P1-simulator/program&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
   }
 }</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/program.dir" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/cmake-build-debug" />
-      <recent name="$PROJECT_DIR$/../../../../../Daniel/Documents/GitHub/P1-simulator/program/cmake-build-debug/Testing" />
-    </key>
-  </component>
   <component name="RunManager">
     <configuration name="program" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="program" TARGET_NAME="program" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="program" RUN_TARGET_NAME="program">
       <method v="2">
@@ -97,14 +91,12 @@
       <workItem from="1669626942830" duration="1000" />
       <workItem from="1669628010559" duration="631000" />
       <workItem from="1669796672051" duration="11903000" />
-      <workItem from="1669886923725" duration="1345000" />
-      <workItem from="1669972073842" duration="488000" />
-      <workItem from="1669972757471" duration="2703000" />
-      <workItem from="1670159549424" duration="62000" />
-      <workItem from="1670346775087" duration="25000" />
-      <workItem from="1670346868891" duration="33000" />
-      <workItem from="1670346950406" duration="613000" />
-      <workItem from="1670350904361" duration="20000" />
+      <workItem from="1669886923725" duration="2123000" />
+      <workItem from="1669890690093" duration="49000" />
+      <workItem from="1670347607558" duration="98000" />
+      <workItem from="1670351133060" duration="1913000" />
+      <workItem from="1670439275571" duration="1584000" />
+      <workItem from="1670486767290" duration="696000" />
     </task>
     <task id="LOCAL-00001" summary="Lili">
       <created>1669628036402</created>
@@ -114,25 +106,25 @@
       <updated>1669628036402</updated>
     </task>
     <task id="LOCAL-00002" summary="Lili">
-      <created>1669980611928</created>
+      <created>1669888389550</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1669980611928</updated>
+      <updated>1669888389550</updated>
     </task>
     <task id="LOCAL-00003" summary="Lili">
-      <created>1669980617676</created>
+      <created>1669888394705</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1669980617676</updated>
+      <updated>1669888394705</updated>
     </task>
-    <task id="LOCAL-00004" summary="mogens">
-      <created>1669980632363</created>
+    <task id="LOCAL-00004" summary="06/12/2022 19:56 working on calculate iteration">
+      <created>1670440870378</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1669980632363</updated>
+      <updated>1670440870378</updated>
     </task>
     <option name="localTasksCounter" value="5" />
     <servers />
@@ -153,7 +145,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Lili" />
-    <MESSAGE value="mogens" />
-    <option name="LAST_COMMIT_MESSAGE" value="mogens" />
+    <MESSAGE value="06/12/2022 19:56 working on calculate iteration" />
+    <option name="LAST_COMMIT_MESSAGE" value="06/12/2022 19:56 working on calculate iteration" />
   </component>
 </project>
