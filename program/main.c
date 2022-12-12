@@ -204,44 +204,6 @@ RegionStruct* readFromTerminal(int* numOfRegions) {
 }
 
 
-void saveFile(RegionStruct* region, int numOfRegions) {
-
-    FILE* regionsFile = fopen("Result.txt", "w");
-
-    fprintf(regionsFile, "%d, ", numOfRegions);
-
-    for (int i = 0; i < numOfRegions; ++i) {
-        fprintf(regionsFile, "%s, %d, %d, ", region[i].regionName, region[i].foodType, region[i].numOfProducers);
-
-        for (int j = 0; j < region[i].numOfProducers; ++j) {
-            fprintf(regionsFile, "%d, ", region[i].baseExcessPerOrg[j]);
-        }
-
-        fprintf(regionsFile, "%d, ", region[i].numOfOrganizations);
-
-        for (int j = 0; j < region[i].numOfOrganizations; ++j) {
-            fprintf(regionsFile, "%d, ", region[i].demandPerOrg[j]);
-        }
-
-
-        for (int j = 0; j < region[i].numOfProducers; ++j) {
-            fprintf(regionsFile, "%.2lf, ", region[i].excessVolatility[j]);
-        }
-
-        //we scan cost per unit for each producer
-        for (int j = 0; j < region[i].numOfProducers; ++j) {
-            fprintf(regionsFile, "%.2lf, ", region[i].costPerUnit[j]);
-        }
-
-        //we scan transport cost for each producer
-        for (int j = 0; j < region[i].numOfProducers; ++j) {
-            fprintf(regionsFile, "%.2lf, ", region[i].transportCost[j]);
-        }
-    }
-
-}
-
-
 char* convertFoodtypeEnum(foodType input){
     char* output;
 
@@ -268,6 +230,26 @@ char* convertFoodtypeEnum(foodType input){
             output = "ERROR";
     }
     return output;
+}
+
+
+void saveFile(RegionResultStruct* results, int numberOfRegions) {
+
+    FILE* regionsFile = fopen("Result.txt", "w");
+
+    fprintf(regionsFile, "Region\tFood type\tFood saved\tFood wasted\t  Unmet demand\tTotal cost\n");
+    int i;
+    for(i = 0; i < numberOfRegions; i++)
+    {
+        fprintf(regionsFile, "%s\t", results[i].regionName);
+        fprintf(regionsFile, "%s\t\t", convertFoodtypeEnum(results[i].foodType));
+        fprintf(regionsFile, "%d\t\t", results[i].foodSaved);
+        fprintf(regionsFile, "%d\t\t\t  ", results[i].foodWasted);
+        fprintf(regionsFile, "%d\t\t\t\t", results[i].unmetDemand);
+        fprintf(regionsFile, "%.2lf\t\t\n", results[i].totalCost);
+    }
+
+    fclose(regionsFile);
 }
 
 
@@ -408,6 +390,7 @@ void outputResult(RegionResultStruct* results, int numberOfRegions) {
 
     /*
      * Result format:
+     *
      * Region    food type    food saved    food wasted    cost of food    cost of transport
      * region1   Eggs        126            35            430.12           232.12
      * region2   Seafood     832            793           1534.54          12.2
@@ -454,9 +437,10 @@ int main() {
 
     outputResult(results, numberOfRegions);
 
-    saveFile(regions, numberOfRegions);
+    saveFile(results, numberOfRegions);
 
     free(regions);
+    free(results);
 
     return 0;
 }
