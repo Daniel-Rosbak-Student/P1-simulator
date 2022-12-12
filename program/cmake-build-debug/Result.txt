@@ -1,1 +1,4 @@
-3, Nord, 6, 1, 2834, 1, 123, 0.00, 2.39, 4.98, Midt, 3, 2, 3500, 1300, 2, 350, 120, 0.00, 0.00, 1.25, 3.45, 5.67, 9.99, Syd, 4, 1, 3200, 1, 4000, 0.00, 3.50, 4.60, 
+Region	Food type	Food saved	Food wasted	  Unmet demand	Total cost
+Nord	Greens		615		-1093138597			  0				1548.04		
+Midt	Seafood		2350		7250			  0				5568.38		
+Syd	Bakedgoods		6400		0			  13600				22503.50		
