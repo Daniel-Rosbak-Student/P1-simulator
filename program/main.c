@@ -289,7 +289,6 @@ void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int 
                 //results[j].foodWasted = regions[j].baseExcessPerOrg - results[j].foodSaved;
                 metDemandSinceLastRestock[j] = 0;
             }
-            //123456!78910
             for (int k = 0; k < regions[j].numOfOrganizations; ++k) {
 
                 //calculate cheapest "option" while demand is over 0
@@ -310,10 +309,13 @@ void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int 
 
                     // finding the producer that can meet (some of) the demand at lowest costs
                     for (int l = 0; l < regions[j].numOfProducers; ++l) {
+
                         if (supplyArray[j][l] > 0) {
+
                             if (supplyArray[j][l] >= dayToDayDemand) {
                                 newCost = (regions[j].costPerUnit[l] * (double)regions[j].demandPerOrg[k]) +
                                           (regions[j].transportCost[l] * regions[j].distanceToOrg[k]);
+
                                 if (newCost < lowestCost) {
                                     lowestCost = newCost;
                                     cheapestProducersIndex = l;
@@ -322,6 +324,7 @@ void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int 
                             else {
                                 newCost = (regions[j].costPerUnit[l] * (double)supplyArray[j][l]) +
                                           (regions[j].transportCost[l] * regions[j].distanceToOrg[k]);
+
                                 if (newCost < lowestCost) {
                                     lowestCost = newCost;
                                     cheapestProducersIndex = l;
@@ -333,18 +336,24 @@ void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int 
                     }
                     //we save the price and food saved from cheapest producer, and update daytodaysupply and -demand
                     if(supplyArray[j][cheapestProducersIndex] >= dayToDayDemand) {
+
                         results[j].foodSaved += dayToDayDemand;
                         metDemandSinceLastRestock[j] += dayToDayDemand;
+
                         results[j].totalCost += (regions[j].costPerUnit[cheapestProducersIndex] * (double)regions[j].demandPerOrg[k]) +
                                                 (regions[j].transportCost[cheapestProducersIndex] * regions[j].distanceToOrg[k]);
+
                         supplyArray[j][cheapestProducersIndex] -= dayToDayDemand;
                         dayToDayDemand -= dayToDayDemand;
                         break;
                     } else {
+
                         results[j].foodSaved += supplyArray[j][cheapestProducersIndex];
                         metDemandSinceLastRestock[j] += supplyArray[j][cheapestProducersIndex];
+
                         results[j].totalCost += (regions[j].costPerUnit[cheapestProducersIndex] * (double)supplyArray[j][cheapestProducersIndex]) +
                                                 (regions[j].transportCost[cheapestProducersIndex] * regions[j].distanceToOrg[k]);
+
                         int temp = dayToDayDemand;
                         dayToDayDemand -= supplyArray[j][cheapestProducersIndex];
                         supplyArray[j][cheapestProducersIndex] -= supplyArray[j][cheapestProducersIndex];
@@ -352,8 +361,6 @@ void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int 
                 }
                 //we add excess demand to the unmetdemand result
                 results[j].unmetDemand += dayToDayDemand;
-
-                //we add excess produce to foodwasted
             }
 
             if (i == numOfIterations - 1) {
@@ -362,9 +369,7 @@ void calculateIteration(RegionStruct* regions, RegionResultStruct* results, int 
                 }
                 results[j].foodWasted -= metDemandSinceLastRestock[j];
             }
-            //output result for this region in this iteration
         }
-        //output something to segment iterations
     }
 
    for (int i = 0; i < numOfRegions; ++i) {
@@ -401,6 +406,21 @@ void outputResult(RegionResultStruct* results, int numberOfRegions) {
 }
 
 
+int compareResults(const void* element1, const void* element2) {
+
+    RegionResultStruct* firstElement = (RegionResultStruct*)element1;
+    RegionResultStruct* secondElement = (RegionResultStruct*)element2;
+
+    if (firstElement->foodSaved < secondElement->foodSaved) {
+        return 1;
+    } else if (firstElement->foodSaved > secondElement->foodSaved) {
+        return -1;
+    } else {
+        return 0;
+    }
+}
+
+
 int main() {
 
     char input;
@@ -434,6 +454,8 @@ int main() {
            regions[0].excessVolatility[0], regions[0].costPerUnit[0], regions[0].transportCost[0]);
 
     calculateIteration(regions, results, numberOfRegions, numOfIterations);
+
+    qsort(results, numberOfRegions, sizeof (RegionResultStruct),compareResults);
 
     outputResult(results, numberOfRegions);
 
