@@ -440,10 +440,6 @@ int main() {
     printf("please input number of days to simulate: ");
     scanf(" %d", &numOfIterations);
 
-    printf("%s, %d, %d, %d, %d, %d, %.2lf, %.2lf, %.2lf\n", regions[0].regionName, regions[0].foodType, regions[0].numOfProducers,
-           regions[0].baseExcessPerOrg[0], regions[0].numOfOrganizations, regions[0].demandPerOrg[0],
-           regions[0].excessVolatility[0], regions[0].costPerUnit[0], regions[0].transportCost[0]);
-
     calculateIteration(regions, results, numberOfRegions, numOfIterations);
 
     qsort(results, numberOfRegions, sizeof (RegionResultStruct),compareResults);
