@@ -1,4 +1,4 @@
-Region	Food type	Food saved	Food wasted	  Unmet demand	Total cost
-Nord	Greens		1230		4438			  0				3096.07		
-Midt	Seafood		4700		14500			  0				11136.76		
-Syd	Bakedgoods		9600		0			  30400				33807.00		
+Region		Food type	Food saved	Food wasted	Unmet demand	Total cost
+     Syd	Bakedgoods		  9600		     0		   30400		33807.00
+    Midt	   Seafood		  4700		 14500		       0		11136.76
+    Nord	    Greens		  1230		  4438		       0		3096.07

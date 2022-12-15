@@ -26,13 +26,14 @@
       <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/Result.txt" beforeDir="false" afterPath="$PROJECT_DIR$/program/cmake-build-debug/Result.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/program/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/program.exe" beforeDir="false" afterPath="$PROJECT_DIR$/program/cmake-build-debug/program.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/program/cmake-build-debug/settings.txt" beforeDir="false" afterPath="$PROJECT_DIR$/program/cmake-build-debug/settings.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/program/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/program/main.c" afterDir="false" />
     </list>
     <list id="8f521a64-5772-46f0-8106-9b1df94d69e3" name="Changes by Daniel" comment="6/12">
       <change beforePath="$PROJECT_DIR$/program/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/program/main.c" afterDir="false" />
     </list>
-    <list id="82cb89ef-e893-4de0-b5cd-ba02bb95c111" name="Changes by lilimarleenmoser" comment="Changes by lilimarleenmoser">
-      <change beforePath="$PROJECT_DIR$/program/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/program/main.c" afterDir="false" />
-    </list>
+    <list id="82cb89ef-e893-4de0-b5cd-ba02bb95c111" name="Changes by lilimarleenmoser" comment="Changes by lilimarleenmoser" />
+    <list id="e62db0dc-148e-4520-9c1f-d5f6313e7375" name="Changes by nikla" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,17 +49,27 @@
   <component name="LineStatusTrackerManager">
     <file path="$PROJECT_DIR$/program/main.c">
       <ranges>
-        <range start1="186" end1="186" start2="186" end2="187" changelist="82cb89ef-e893-4de0-b5cd-ba02bb95c111" />
-        <range start1="205" end1="206" start2="206" end2="208" changelist="82cb89ef-e893-4de0-b5cd-ba02bb95c111" />
-        <range start1="234" end1="235" start2="236" end2="237" changelist="82cb89ef-e893-4de0-b5cd-ba02bb95c111" />
-        <range start1="239" end1="240" start2="241" end2="242" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
-        <range start1="243" end1="249" start2="245" end2="251" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
-        <range start1="378" end1="379" start2="380" end2="381" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
-        <range start1="382" end1="388" start2="384" end2="390" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
-        <range start1="393" end1="398" start2="395" end2="400" changelist="82cb89ef-e893-4de0-b5cd-ba02bb95c111" />
-        <range start1="428" end1="429" start2="430" end2="431" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
-        <range start1="430" end1="434" start2="432" end2="432" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
-        <range start1="439" end1="440" start2="437" end2="444" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
+        <range start1="102" end1="103" start2="102" end2="103" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="109" end1="111" start2="109" end2="111" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="113" end1="114" start2="113" end2="114" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="124" end1="125" start2="124" end2="125" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="130" end1="131" start2="130" end2="131" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="163" end1="164" start2="163" end2="164" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="170" end1="171" start2="170" end2="171" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="176" end1="177" start2="176" end2="177" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="182" end1="183" start2="182" end2="183" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="190" end1="191" start2="190" end2="191" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="192" end1="193" start2="192" end2="193" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="196" end1="197" start2="196" end2="197" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="198" end1="199" start2="198" end2="199" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="239" end1="240" start2="239" end2="240" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="243" end1="249" start2="243" end2="249" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="382" end1="384" start2="382" end2="382" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="385" end1="385" start2="383" end2="386" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="387" end1="393" start2="388" end2="394" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="395" end1="405" start2="396" end2="396" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
+        <range start1="450" end1="454" start2="441" end2="441" changelist="8f521a64-5772-46f0-8106-9b1df94d69e3" />
+        <range start1="461" end1="462" start2="448" end2="455" changelist="1800fb56-8c2f-4d4a-bfa2-fe7c4dd1c12b" />
       </ranges>
     </file>
   </component>
@@ -87,9 +98,9 @@
   }
 }</component>
   <component name="RunManager">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="program" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="program" TARGET_NAME="program" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="program" RUN_TARGET_NAME="program">
@@ -115,6 +126,7 @@
       <workItem from="1670487577317" duration="4461000" />
       <workItem from="1670833934709" duration="1156000" />
       <workItem from="1670835816867" duration="2392000" />
+      <workItem from="1671092986754" duration="3190000" />
     </task>
     <task id="LOCAL-00001" summary="Ben 05/12">
       <created>1670314129757</created>
