@@ -98,7 +98,7 @@ RegionStruct* readFile(int* numOfRegions) {
 
 // if the user chooses to input data themselves this function is called
 RegionStruct* readFromTerminal(int* numOfRegions) {
-    int regions, producers, organizations, foodtype;
+    int producers, organizations, foodtype;
 
     printf("\nPlease enter the number of regions: ");
     scanf(" %d", numOfRegions);
@@ -391,7 +391,7 @@ void outputResult(RegionResultStruct* results, int numberOfRegions) {
         printf("%6d\t\t", results[i].foodSaved);
         printf("%6d\t\t  ", results[i].foodWasted);
         printf("%6d\t\t", results[i].unmetDemand);
-        printf("%6.2lf\n", results[i].totalCost);
+        printf("%.2lf\n", results[i].totalCost);
     }
 
 }
